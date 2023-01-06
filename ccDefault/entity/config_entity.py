@@ -3,12 +3,14 @@ from collections import namedtuple
 DataIngestionConfig = namedtuple("DataIngestionConfig", 
                                  ["dataset_download_url", 
                                   "tgz_download_url", 
-                                  "rar_data_dir", 
+                                  "raw_data_dir", 
                                   "ingested_train_dir", 
                                   "ingested_test_dir"])
 
 DataValidationConfig = namedtuple("DataValidationConfig", 
-                                 ["schema_file_path"])
+                                 ["schema_file_path",
+                                  "report_file_path",
+                                  "report_page_file_path"])
 
 
 # For feature Engineering
@@ -22,7 +24,8 @@ DataTransformationConfig = namedtuple("DataTransformationConfig",
 
 ModelTrainerConfig = namedtuple("ModelTrainerConfig", 
                                  ["trained_model_file_path", 
-                                  "base_accuracy"])
+                                  "base_accuracy",
+                                  "model_config_file_path"])
 
 ModelEvaluationConfig = namedtuple("ModelEvaluationConfig",
                                    ["model_evaluation_file_path",
