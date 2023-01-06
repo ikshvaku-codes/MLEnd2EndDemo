@@ -1,6 +1,6 @@
 import logging, os
 from datetime import datetime
-LOG_DIR = "logs"
+LOG_DIR = "ccDefault_logs"
 
 CURRENT_TIMESTAMP = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 

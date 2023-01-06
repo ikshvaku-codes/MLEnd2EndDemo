@@ -7,4 +7,5 @@ scikit-learn
 matplotlib
 seaborn
 joblib
+PyYAML
 -e .
