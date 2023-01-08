@@ -77,7 +77,7 @@ class DataIngestion:
             logging.info(f"Extracting compressed files from :[{tgz_file_path}] into :[{raw_data_dir}]")
 
             if tgz_file_path.endswith(".zip"):
-                with  zipfile.ZipFile(tgz_file_path) as ccDefault_tgz_file_obj:
+                with  zipfile.ZipFile(tgz_file_path,'r') as ccDefault_tgz_file_obj:
                     ccDefault_tgz_file_obj.extractall(path=raw_data_dir)
             else :
                 
@@ -101,11 +101,11 @@ class DataIngestion:
             logging.info(f"Reading csv file: [{file_path}]")
             ccDefault_df = pd.read_csv(file_path)
               
-            ccDefault_df["income_cat"] = pd.cut(
-                ccDefault_df["median_income"],
-                bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
-                labels=[1,2,3,4,5]
-            )  
+            # ccDefault_df["income_cat"] = pd.cut(
+            #     ccDefault_df["median_income"],
+            #     bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
+            #     labels=[1,2,3,4,5]
+            # )  
              
             logging.info(f"Splitting data into train and test")         
             strat_train_set = None
@@ -113,10 +113,9 @@ class DataIngestion:
             
             split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
             
-            for train_index, test_index in split.split(ccDefault_df, ccDefault_df["income_cat"]):
-                strat_train_set = ccDefault_df.loc[train_index].drop(["income_cat"], axis=1)
-                strat_test_set = ccDefault_df.loc[test_index].drop(["income_cat"], axis=1)
-            
+            for train_index, test_index in split.split(ccDefault_df, ccDefault_df["default.payment.next.month"]):
+                strat_train_set = ccDefault_df.loc[train_index]
+                strat_test_set = ccDefault_df.loc[test_index]           
             train_file_path = os.path.join(
                 self.data_ingestion_config.ingested_train_dir,
                 file_name
