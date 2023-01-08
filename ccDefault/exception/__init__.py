@@ -19,7 +19,7 @@ class CCDefaultException(Exception):
         This method will return the details about the error message in a particular format.
         """
         _,_,exec_tb = error_detail.exc_info()
-        line_number = exec_tb.tb_frame.f_lineno
+        line_number = exec_tb.tb_lineno
         file_name = exec_tb.tb_frame.f_code.co_filename
         error_message = f"Error occurred in script: {file_name} in line {line_number}: {error_message}."
         return error_message
